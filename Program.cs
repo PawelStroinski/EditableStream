@@ -4,7 +4,7 @@ class Program
 {
     static void Main(string[] args)
     {
-        var filename =  Path.GetTempPath() + "sample.txt";
+        var filename = Path.GetTempPath() + "sample.txt";
         var ins = "arvelousl";
         using (var stream = new InsertModeFileStream(filename))
         using (var writer = new StreamWriter(stream))

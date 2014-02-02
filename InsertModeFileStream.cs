@@ -19,6 +19,11 @@ class InsertModeFileStream : Stream, IDisposable
         write = new FileStream(path, mode, access, share);
     }
 
+    public InsertModeFileStream(FileStream writeStream)
+    {
+        write = writeStream;
+    }
+
     public override bool CanRead { get { return write.CanRead; } }
 
     public override bool CanSeek { get { return write.CanSeek; } }
