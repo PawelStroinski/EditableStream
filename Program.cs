@@ -13,6 +13,9 @@ class Program
             writer.Flush();
             stream.Position = 9;
             writer.Write(ins);
+            writer.Flush();
+            stream.Position = 34;
+            stream.Delete(5);
         }
     }
 }

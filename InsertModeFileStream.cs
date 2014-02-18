@@ -9,7 +9,7 @@ using System;
 using System.IO;
 using System.Text;
 
-class InsertModeFileStream : Stream, IDisposable
+class InsertModeFileStream : InsertModeStream, IDisposable
 {
     readonly FileStream write;
 
@@ -44,11 +44,30 @@ class InsertModeFileStream : Stream, IDisposable
 
     public override void Write(byte[] buffer, int offset, int count)
     {
-        TransposeIfNeeded(count);
+        TransposeIfNeededForWrite(count);
         write.Write(buffer, offset, count);
     }
 
-    void TransposeIfNeeded(int distance)
+    public override void Delete(long count)
+    {
+        CheckDeleteCount(count);
+        var sourcePosition = Position + count;
+        var length = Length - sourcePosition;
+        var destinationPosition = Position;
+        var distance = count;
+        if (length > 0)
+            using (var read = CreateReadStream())
+                new TransposeHelper(
+                    write: write,
+                    read: read,
+                    sourcePosition: sourcePosition,
+                    length: length,
+                    destinationPosition: destinationPosition,
+                    distance: distance).Transpose();
+        SetLength(Length - count);
+    }
+
+    void TransposeIfNeededForWrite(int distance)
     {
         var sourcePosition = Position;
         var streamLength = Length;
@@ -57,10 +76,29 @@ class InsertModeFileStream : Stream, IDisposable
         {
             var length = streamLength - sourcePosition;
             var destinationPosition = sourcePosition + distance;
-            using (var read = new FileStream(write.Name, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
-                new TransposeHelper(write, read, sourcePosition, length, destinationPosition, distance).Transpose();
+            using (var read = CreateReadStream())
+                new TransposeHelper(
+                    write: write,
+                    read: read,
+                    sourcePosition: sourcePosition,
+                    length: length,
+                    destinationPosition: destinationPosition,
+                    distance: distance).Transpose();
             Position = sourcePosition;
         }
+    }
+
+    FileStream CreateReadStream()
+    {
+        return new FileStream(write.Name, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
+    }
+
+    void CheckDeleteCount(long count)
+    {
+        if (count <= 0)
+            throw new ArgumentException("Count cannot be zero or less.");
+        if (count > Length - Position)
+            throw new ArgumentException("Count cannot exceed number of bytes after current position.");
     }
 
     void IDisposable.Dispose()
@@ -72,8 +110,7 @@ class InsertModeFileStream : Stream, IDisposable
     {
         const int defaultBufferSize = 32 * 1024; // 32KB is consistently among the most efficient buffer sizes
         readonly FileStream write, read;
-        readonly long sourcePosition, length, destinationPosition;
-        readonly int distance;
+        readonly long sourcePosition, length, destinationPosition, distance;
         BinaryReader reader;
         BinaryWriter writer;
 
@@ -88,7 +125,7 @@ class InsertModeFileStream : Stream, IDisposable
         /// <param name="destinationPosition">The destination position of the byte range</param>
         /// <param name="distance">The distance between destinationPosition and sourcePosition</param>
         public TransposeHelper(FileStream write, FileStream read, long sourcePosition, long length,
-            long destinationPosition, int distance)
+            long destinationPosition, long distance)
         {
             this.write = write;
             this.read = read;
