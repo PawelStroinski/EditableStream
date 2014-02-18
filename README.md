@@ -13,11 +13,14 @@ FileStream drop-in replacement with insert-mode as opposed to override-mode.
 	    writer.Flush();
 	    stream.Position = 9;
 	    writer.Write(ins);
+	    writer.Flush();
+	    stream.Position = 34;
+	    stream.Delete(5);
 	}
 
 ### Output
 
-This is marvelously very nice test file.
+This is marvelously very nice test.
 
 # Credits #
 The TransposeHelper class is coming with very small modifications from the article:
