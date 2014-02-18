@@ -1,6 +1,6 @@
 InsertModeFileStream
 ====================
-FileStream drop-in replacement with insert-mode as opposed to override-mode.
+Stream & FileStream drop-in replacement with insert-mode as opposed to override-mode.
 
 ### Example code
 
