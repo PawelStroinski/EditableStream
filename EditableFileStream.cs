@@ -1,14 +1,14 @@
 ﻿using System.IO;
 
-class InsertModeFileStream : InsertModeStream
+class EditableFileStream : EditableStream
 {
-    public InsertModeFileStream(string path, FileMode mode = FileMode.OpenOrCreate,
+    public EditableFileStream(string path, FileMode mode = FileMode.OpenOrCreate,
         FileAccess access = FileAccess.ReadWrite, FileShare share = FileShare.Read)
         : base(new FileStream(path, mode, access, share))
     {
     }
 
-    public InsertModeFileStream(FileStream writeStream)
+    public EditableFileStream(FileStream writeStream)
         : base(writeStream)
     {
     }

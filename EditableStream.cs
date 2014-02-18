@@ -9,14 +9,16 @@ using System;
 using System.IO;
 using System.Text;
 
-abstract class InsertModeStream : Stream, IDisposable
+abstract class EditableStream : Stream, IDisposable
 {
     protected readonly Stream write;
 
-    protected InsertModeStream(Stream writeStream)
+    protected EditableStream(Stream writeStream)
     {
         write = writeStream;
     }
+
+    public bool InsertMode;
 
     public override bool CanRead { get { return write.CanRead; } }
 
@@ -38,7 +40,8 @@ abstract class InsertModeStream : Stream, IDisposable
 
     public override void Write(byte[] buffer, int offset, int count)
     {
-        TransposeIfNeededForWrite(count);
+        if (InsertMode)
+            TransposeIfNeededForWrite(count);
         write.Write(buffer, offset, count);
     }
 

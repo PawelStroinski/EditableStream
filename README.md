@@ -1,14 +1,15 @@
-InsertModeFileStream
-====================
-Stream & FileStream drop-in replacement with insert-mode as opposed to override-mode.
+EditableStream
+==============
+Stream & FileStream drop-in replacement with insert-mode as opposed to override-mode and with delete operation.
 
 ### Example code
 
 	var filename = Path.GetTempPath() + "sample.txt";
 	var ins = "arvelousl";
-	using (var stream = new InsertModeFileStream(filename))
+	using (var stream = new EditableFileStream(filename))
 	using (var writer = new StreamWriter(stream))
 	{
+	    stream.InsertMode = true;
 	    writer.WriteLine("This is my very nice test file.");
 	    writer.Flush();
 	    stream.Position = 9;
@@ -21,6 +22,13 @@ Stream & FileStream drop-in replacement with insert-mode as opposed to override-
 ### Output
 
 This is marvelously very nice test.
+
+### API
+
+`EditableStream` class inherits from `Stream` and adds `InsertMode` flag and `Delete(long count)` method.
+
+`EditableFileStream` class inherits from `EditableStream`.
+
 
 # Credits #
 The TransposeHelper class is coming with very small modifications from the article:

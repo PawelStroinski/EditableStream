@@ -6,9 +6,10 @@ class Program
     {
         var filename = Path.GetTempPath() + "sample.txt";
         var ins = "arvelousl";
-        using (var stream = new InsertModeFileStream(filename))
+        using (var stream = new EditableFileStream(filename))
         using (var writer = new StreamWriter(stream))
         {
+            stream.InsertMode = true;
             writer.WriteLine("This is my very nice test file.");
             writer.Flush();
             stream.Position = 9;
