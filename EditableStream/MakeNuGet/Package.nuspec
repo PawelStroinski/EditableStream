@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<package>
+  <metadata>
+    <id>EditableStream</id>
+    <version>0.1</version>
+    <authors>Pawel Stroinski Credits to Paul C Smith</authors>
+    <owners>Pawel Stroinski</owners>
+    <licenseUrl>https://github.com/PawelStroinski/EditableStream/blob/master/COPYING.md</licenseUrl>
+    <projectUrl>https://github.com/PawelStroinski/EditableStream</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Stream &amp; FileStream drop-in replacement with insert-mode as opposed to override-mode and with delete operation. See example @ https://github.com/PawelStroinski/EditableStream</description>
+    <releaseNotes></releaseNotes>
+    <copyright>Copyright 2014</copyright>
+    <tags>Stream FileStream Insert Mode Delete</tags>
+    <dependencies>
+    </dependencies>
+  </metadata>
+</package>
