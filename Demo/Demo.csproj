@@ -7,8 +7,8 @@
     <ProjectGuid>{8C440BE8-2C05-4E39-96B1-F7689FB312DD}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>DefaultNamespace</RootNamespace>
-    <AssemblyName>InsertModeFileStream</AssemblyName>
+    <RootNamespace>EditableStream</RootNamespace>
+    <AssemblyName>Demo</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -41,13 +41,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="EditableFileStream.cs" />
-    <Compile Include="EditableStream.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\EditableStream\EditableStream.csproj">
+      <Project>{3a863617-3358-4138-b4ed-6f44e0b80d47}</Project>
+      <Name>EditableStream</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
