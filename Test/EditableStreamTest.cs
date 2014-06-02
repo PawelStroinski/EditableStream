@@ -2,7 +2,7 @@
 using System.IO;
 using NUnit.Framework;
 
-namespace EditableStream
+namespace StreamUtils
 {
     public class EditableStreamTest
     {

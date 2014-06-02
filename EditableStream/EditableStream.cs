@@ -9,7 +9,7 @@ using System;
 using System.IO;
 using System.Text;
 
-namespace EditableStream
+namespace StreamUtils
 {
     public abstract class EditableStream : Stream, IDisposable
     {
