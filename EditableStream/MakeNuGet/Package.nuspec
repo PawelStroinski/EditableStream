@@ -2,7 +2,7 @@
 <package>
   <metadata>
     <id>EditableStream</id>
-    <version>0.1</version>
+    <version>0.2</version>
     <authors>Pawel Stroinski Credits to Paul C Smith</authors>
     <owners>Pawel Stroinski</owners>
     <licenseUrl>https://github.com/PawelStroinski/EditableStream/blob/master/COPYING.md</licenseUrl>
