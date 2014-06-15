@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Text;
 using NUnit.Framework;
 
 namespace StreamUtils
@@ -9,18 +10,29 @@ namespace StreamUtils
         [Test]
         public void DemoInLoop()
         {
-            var filename = Path.GetTempPath() + "sample.txt";
-            if (File.Exists(filename))
-                File.Move(filename, filename + Guid.NewGuid());
+            var filename = Path.GetTempPath() + Guid.NewGuid() + ".txt";
             var count = 10;
             var expectedLine = "This is marvelously very nice test." + Environment.NewLine;
             var expected = string.Empty;
+            var actualFromMemory = string.Empty;
             for (int i = 0; i < count; i++)
             {
-                Program.Main(null);
+                using (var stream = new EditableFileStream(filename))
+                    Program.Demo(stream);
                 expected += expectedLine;
-                var actual = File.ReadAllText(filename);
-                Assert.AreEqual(expected, actual);
+                var actualFromFile = File.ReadAllText(filename);
+                Assert.AreEqual(expected, actualFromFile);
+                using (var stream = new EditableMemoryStream())
+                {
+                    using (var writer = new StreamWriter(stream, Encoding.ASCII, 512, leaveOpen: true))
+                        writer.Write(actualFromMemory);
+                    stream.Position = 0;
+                    Program.Demo(stream);
+                    stream.Position = 0;
+                    using (var reader = new StreamReader(stream))
+                        actualFromMemory = reader.ReadToEnd();
+                }
+                Assert.AreEqual(expected, actualFromMemory);
             }
         }
     }

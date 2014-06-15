@@ -53,6 +53,10 @@
       <Project>{8c440be8-2c05-4e39-96b1-f7689fb312dd}</Project>
       <Name>Demo</Name>
     </ProjectReference>
+    <ProjectReference Include="..\EditableStream\EditableStream.csproj">
+      <Project>{3a863617-3358-4138-b4ed-6f44e0b80d47}</Project>
+      <Name>EditableStream</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -7,8 +7,15 @@ namespace StreamUtils
         public static void Main(string[] args)
         {
             var filename = Path.GetTempPath() + "sample.txt";
-            var ins = "arvelousl";
             using (var stream = new EditableFileStream(filename))
+                Demo(stream);
+            using (var stream = new EditableMemoryStream())
+                Demo(stream);
+        }
+
+        public static void Demo(EditableStream stream)
+        {
+            var ins = "arvelousl";
             using (var writer = new StreamWriter(stream))
             {
                 stream.InsertMode = true;
