@@ -1,5 +1,7 @@
 EditableStream
 ==============
+[![Build Status](https://travis-ci.org/PawelStroinski/EditableStream.svg?branch=master)](https://travis-ci.org/PawelStroinski/EditableStream)
+
 Stream & FileStream drop-in replacement with insert-mode as opposed to override-mode and with delete operation.
 
 ### Example code
